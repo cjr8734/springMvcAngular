@@ -5,6 +5,13 @@
 
 <head>
     <title>Welcome Page</title>
+    <style>
+              .map {
+                height: 400px;
+                width: 100%;
+              }
+    </style>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.3.1/css/ol.css" type="text/css">
 </head>
 
 <body data-ng-controller="MainCtrl as ctrl" data-ng-app="notesApp">
@@ -56,6 +63,12 @@
     <a href="${contextPath}/example/angular6">Angular example #6 - Show $location info</a> <br/>
     <a href="${contextPath}/example/angular7">Angular example #7 - Share Data Between 2 Controllers</a> <br/>
 
+    <br/>
+
+    <h2>My Map</h2>
+    <div id="map" class="map"></div>
+
+    <script src="${contextPath}/resources/OpenLayers/ol.js" type="text/javascript"></script>
 
     <%-- Load Angular --%>
     <script src="${contextPath}/resources/angular-1.3.16/angular.min.js" type="text/javascript"></script>
@@ -91,6 +104,20 @@
          }
          ]);
 
+    </script>
+    <script type="text/javascript">
+          var map = new ol.Map({
+            target: 'map',
+            layers: [
+              new ol.layer.Tile({
+                source: new ol.source.OSM()
+              })
+            ],
+            view: new ol.View({
+              center: ol.proj.fromLonLat([-77.037, 38.907]),
+              zoom: 10
+            })
+          });
     </script>
 </body>
 </html>

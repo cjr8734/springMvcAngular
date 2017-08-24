@@ -1,2 +1,3 @@
 app1\controllers\WelcomeController.class
 app1\model\UserInfo.class
+app1\utilities\MyApplicationWatcher.class
