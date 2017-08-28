@@ -2,14 +2,36 @@ package app1.utilities;
 
 
 import javax.servlet.ServletContextEvent;
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.context.ContextLoaderListener;
 
 public class MyApplicationWatcher extends ContextLoaderListener
 {
     private static final Logger logger = LoggerFactory.getLogger( MyApplicationWatcher.class );
 
+    /*******************************************************************************
+     * verifyConnectionPool()
+     *******************************************************************************/
+    private void verifyConnectionPool() throws Exception
+    {
+        logger.debug("verifyConnectionPool() started");
+
+        // Get a reference to the postgresDataSource bean
+        DataSource postgresDataSource = (DataSource) SpringAppContextUtils.getBean("postgresDataSource");
+
+        JdbcTemplate jt = new JdbcTemplate( postgresDataSource );
+
+        final String sSql = "Select now()";
+
+        // Run a query -- which initialized the connection pool
+        String sDatabaseTime = jt.queryForObject(sSql, String.class);
+
+        logger.debug("verifyConnectionPool() finished successfully.  Database Time is {}", sDatabaseTime);
+    }
 
     /***********************************************************************************
      * contextInitialized()
@@ -33,6 +55,9 @@ public class MyApplicationWatcher extends ContextLoaderListener
 
             // Do additional tests -- e.g., verify that the database can be reached
             // At this point, we can use spring-beans
+
+            // Verify your connection pool
+            verifyConnectionPool();
 
         }
         catch (Exception e)
@@ -72,6 +97,5 @@ public class MyApplicationWatcher extends ContextLoaderListener
 
         logger.debug("{} contextDestroyed() finished", sWebAppName);
     }
-
 
 }

@@ -2,17 +2,22 @@ package app1.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import app1.model.UserInfo;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import app1.utilities.SpringAppContextUtils;
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 @Controller
 public class WelcomeController
 {
+    @Resource
+    private DataSource postgresDataSource;
     private final static Logger logger = LoggerFactory.getLogger(WelcomeController.class);
 
 
@@ -29,8 +34,6 @@ public class WelcomeController
         return new ModelAndView("forward:/welcome");
     }
 
-
-
     /**********************************************************************
      * mainPage()
      *
@@ -39,8 +42,7 @@ public class WelcomeController
      *  2) Forward the user to the welcome.jsp page
      ***********************************************************************/
     @RequestMapping("/welcome")
-    public ModelAndView mainPage( Model aModel )
-    {
+    public ModelAndView mainPage( Model aModel ) {
         logger.debug("mainPage() started");
 
         // Create a modelAndView object
@@ -79,5 +81,19 @@ public class WelcomeController
         mav.addObject("userInfo", userInfo);
 
         return mav;
+    }
+    /*******************************************************************************
+     * getDatabaseTime()
+     *******************************************************************************/
+    private String getDatabaseTime() throws Exception
+    {
+        JdbcTemplate jt = new JdbcTemplate( this.postgresDataSource );
+
+        final String sSql = "Select now()";
+
+        // Run a query -- which initialized the connection pool
+        String sDatabaseTime = jt.queryForObject(sSql, String.class);
+
+        return sDatabaseTime;
     }
 }

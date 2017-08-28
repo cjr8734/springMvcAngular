@@ -21,6 +21,7 @@
     Hello {{1 + 1}}nd time AngularJS
     <br/>
     <br/>
+    Database time is ${currentTime} <br/>
     ctrl.helloMessage={{ctrl.helloMessage}}  <br/>
     ctrl.byeMessage={{ctrl.byeMessage}} <br/>
 
