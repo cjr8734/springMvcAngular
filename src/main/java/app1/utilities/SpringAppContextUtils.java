@@ -15,14 +15,11 @@ package app1.utilities;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import javax.annotation.Resource;
-import javax.sql.DataSource;
-
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SpringAppContextUtils implements ApplicationContextAware
 {
-    DataSource postgresDataSource = (DataSource) SpringAppContextUtils.getBean("postgresDataSource");
-    private static ApplicationContext applicationContext = null;
+    private static ApplicationContext applicationContext;
 
     public static ApplicationContext getApplicationContext()
     {
@@ -38,6 +35,7 @@ public class SpringAppContextUtils implements ApplicationContextAware
 
     public static Object getBean(String aName)
     {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         if (applicationContext == null)
         {
             throw new RuntimeException("Error in SpringAppContextUtils.getBean().  The applicationContext is null");

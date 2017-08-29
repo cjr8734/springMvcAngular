@@ -10,14 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 import app1.model.UserInfo;
 import org.springframework.web.bind.annotation.PathVariable;
 import app1.utilities.SpringAppContextUtils;
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Controller
 public class WelcomeController
 {
-    @Resource
-    private DataSource postgresDataSource;
     private final static Logger logger = LoggerFactory.getLogger(WelcomeController.class);
 
 
@@ -42,7 +39,7 @@ public class WelcomeController
      *  2) Forward the user to the welcome.jsp page
      ***********************************************************************/
     @RequestMapping("/welcome")
-    public ModelAndView mainPage( Model aModel ) {
+    public ModelAndView mainPage( Model aModel ) throws Exception {
         logger.debug("mainPage() started");
 
         // Create a modelAndView object
@@ -55,6 +52,10 @@ public class WelcomeController
         UserInfo userInfo = new UserInfo();
         userInfo.setUserName("Chris");
         userInfo.setIsAdministrator(true);
+
+        String sDatabaseTime = getDatabaseTime();
+        logger.debug("Current database time is {}", sDatabaseTime);
+        mav.addObject("currentTime", sDatabaseTime);
 
         // Add the userInfo information to the view
         mav.addObject("userInfo", userInfo);
@@ -82,6 +83,9 @@ public class WelcomeController
 
         return mav;
     }
+
+    DataSource postgresDataSource = (DataSource) SpringAppContextUtils.getBean("postgresDataSource");
+
     /*******************************************************************************
      * getDatabaseTime()
      *******************************************************************************/
