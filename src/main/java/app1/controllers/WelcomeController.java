@@ -10,11 +10,17 @@ import org.springframework.web.servlet.ModelAndView;
 import app1.model.UserInfo;
 import org.springframework.web.bind.annotation.PathVariable;
 import app1.utilities.SpringAppContextUtils;
+
+import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Controller
 public class WelcomeController
 {
+    @Resource(name = "myProps")
+    private Properties appProperties;
+
     private final static Logger logger = LoggerFactory.getLogger(WelcomeController.class);
 
 
@@ -27,6 +33,9 @@ public class WelcomeController
     @RequestMapping("/")
     public ModelAndView handleDefaultPage( Model aModel )
     {
+        String sAppMode = appProperties.getProperty("app.mode");
+        logger.debug("app.mode={}", sAppMode);
+
         // By default, forward users to the /welcome page
         return new ModelAndView("forward:/welcome");
     }
