@@ -36,19 +36,17 @@
     <!-- Setup a spring bean that acts as a C3P0 Connection pool                          -->
     <!-- NOTE:  Set destroy-method="close" so that Spring will close the connection pool  -->
     <bean id="postgresDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">
-        <property name="driverClass"              value="org.postgresql.Driver"/>
-        <property name="jdbcUrl"                  value="jdbc:postgresql://localhost:5432/postgres"  />
-        <property name="user"                     value="postgres" />
-        <property name="password"                 value="secret" />
-        <property name="initialPoolSize"          value="1" />
-        <property name="maxPoolSize"              value="15" />
-        <property name="minPoolSize"              value="1" />
-        <property name="maxIdleTime"              value="240" />
-        <property name="maxConnectionAge"         value="3600" />
-        <property name="preferredTestQuery"       value="select now() "/>
-        <property name="idleConnectionTestPeriod" value="30000" />
+        <property name="driverClass"              value="${jdbc.driverClass}"        />
+        <property name="jdbcUrl"                  value="${jdbc.jdbcUrl}"            />
+        <property name="user"                     value="${jdbc.user}"               />
+        <property name="password"                 value="${jdbc.password}"           />
+        <property name="initialPoolSize"          value="${jdbc.initialPoolSize}"    />
+        <property name="maxPoolSize"              value="${jdbc.maxPoolSize}"        />
+        <property name="minPoolSize"              value="${jdbc.minPoolSize}"        />
+        <property name="maxIdleTime"              value="${jdbc.maxIdleTime}"        />
+        <property name="maxConnectionAge"         value="${jdbc.maxConnectionAge}"   />
+        <property name="preferredTestQuery"       value="${jdbc.preferredTestQuery}" />
+        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
     </bean>
-
-
 
 </beans>

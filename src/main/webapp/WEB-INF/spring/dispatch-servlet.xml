@@ -59,7 +59,7 @@
     </bean>
 
     <bean id="myProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="locations" value="classpath:webapp1.properties" />
+        <property name="locations" value="classpath:SpringMvc.properties" />
     </bean>
 
 </beans>
