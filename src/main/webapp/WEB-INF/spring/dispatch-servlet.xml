@@ -62,4 +62,34 @@
         <property name="locations" value="classpath:SpringMvc.properties" />
     </bean>
 
+    <bean id="jawrControllerForJs" class="net.jawr.web.servlet.JawrSpringController">
+        <property name="mapping" value=""/>
+        <property name="controllerMapping" value="/jawr/"/>
+        <property name="configLocation" value="/jawr.properties"/>
+        <property name="type" value="js"/>
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/jawr/**/*.js">jawrControllerForJs</prop>
+                <prop key="/jawr/**/*.css">jawrControllerForCSS</prop>
+                <prop key="/jawr/**/*">jawrControllerForImages</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="jawrControllerForCSS" class="net.jawr.web.servlet.JawrSpringController">
+        <property name="mapping" value=""/>
+        <property name="controllerMapping" value="/jawr/"/>
+        <property name="configLocation" value="/jawr.properties"/>
+        <property name="type" value="css"/>
+    </bean>
+
+    <bean id="jawrControllerForImages" class="net.jawr.web.servlet.JawrSpringController">
+        <property name="mapping" value=""/>
+        <property name="controllerMapping" value="/jawr/"/>
+        <property name="configLocation" value="/jawr.properties"/>
+        <property name="type" value="binary"/>
+    </bean>
 </beans>

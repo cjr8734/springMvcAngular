@@ -1,3 +1,4 @@
+<%@ taglib prefix="jwr" uri="http://jawr.net/tags" %>
 <%@ page session="false" language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 
         <%-- Allow all JSPs to use the tag libraries --%>

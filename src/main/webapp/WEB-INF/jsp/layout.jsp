@@ -1,3 +1,4 @@
+<%@ include file="/WEB-INF/jsp/stdJspIncludes.jsp" %>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 
         <%-- Allow all JSPs to have the contextPath variable --%>
@@ -10,11 +11,9 @@
 
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-                <%-- Load Bootstrap CSS --%>
-                <link href="${contextPath}/resources/bootstrap-4.0.0-beta-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+               <%-- I N S E R T       C S S     B U N D L E     --%>
+               <jwr:style src="/id/bootstrap.css"/>
 
-                <%-- Load Bootstrap CSS Themes --%>
-                <link href="${contextPath}/resources/bootstrap-4.0.0-beta-dist/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 
                 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
                 <!--[if lt IE 9]>
@@ -22,16 +21,8 @@
                     <script src="${contextPath}/resources/bootstrap-4.0.0-beta-dist/assets/Respond-master/dest/respond.min.js"></script>
                 <![endif]-->
 
-                <link rel="stylesheet" href="${contextPath}/resources/DataTables-1.10.15/media/css/jquery.dataTables.min.css?compile=false"  />
-
-                <%-- Load Angular --%>
-                <script src="${contextPath}/resources/angular-1.3.16/angular.min.js" type="text/javascript"></script>
-
-                <%-- Load jQuery --%>
-                <script src="${contextPath}/resources/jquery-3.2.1/jquery.min.js" type="text/javascript"></script>
-
-                <%-- Load Bootstrap --%>
-                <script src="${contextPath}/resources/bootstrap-4.0.0-beta-dist/js/bootstrap.min.js" type="text/javascript"></script>
+                <%-- L O A D    J A V A S C R I P T     B U N D L E   (jquery, bootstrap, angular)  --%>
+                <jwr:script src="/id/jquery.bootsrap.angular.js" />
 
                 <%-- P A G E      H E A D    S E C T I O N  --%>
                 <sitemesh:write property='head'/>

@@ -48,5 +48,4 @@
         <property name="preferredTestQuery"       value="${jdbc.preferredTestQuery}" />
         <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
     </bean>
-
 </beans>
