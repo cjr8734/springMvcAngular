@@ -17,50 +17,32 @@
 		                <!-- Next nav links in the Navbar -->
 		                <div id="navbarCollapse" class="collapse navbar-collapse">
 		                    <ul class="nav navbar-nav">
-		                        <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+		                        <li ><a href="${contextPath}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 		                        <li class="dropdown">
-		                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-certificate"></span> DotNetFunda <b class="caret"></b></a>
+		                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-console"></span> Angular <b class="caret"></b></a>
 		                            <ul role="menu" class="dropdown-menu">
-		                                <li><a href="#">Articles</a></li>
-		                                <li><a href="#">Interviews</a></li>
-		                                <li><a href="#">Forums</a></li>
+		                                <li><a href="${contextPath}/example/angular1" target="_top">1 - Simple Controller</a></li>
+		                                <li><a href="${contextPath}/example/angular2" target="_top">2 - Guessing Game</a></li>
+		                                <li><a href="${contextPath}/example/angular3" target="_top">3 - select2 Dropdown</a></li>
+		                                <li><a href="${contextPath}/example/angular4" target="_top">4 - Page with a Timer</a></li>
+                                        <li><a href="${contextPath}/example/angular5" target="_top">5 - select2 Page with a Timer</a></li>
+                                        <li><a href="${contextPath}/example/angular6" target="_top">6 - Show $location Info</a></li>
+                                        <li><a href="${contextPath}/example/angular7" target="_top">7 - Share Data Between 2 Controllers</a></li>
 		                                <li class="divider"></li>
-		                                <li><a href="#">About Us</a></li>
-		                                <li><a href="#">Contact Us</a></li>
 		                            </ul>
 		                        </li>
 		                        <li class="dropdown">
-		                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-book"></span> ITFunda <b class="caret"></b></a>
+		                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-folder-close"></span> REST <b class="caret"></b></a>
 		                            <ul role="menu" class="dropdown-menu">
-		                                <li><a href="#">Training</a></li>
-		                                <li><a href="#">Placement</a></li>
+		                                <li><a href="${contextPath}/rest/users" target="_top">users</a></li>
+		                                <li><a href="${contextPath}/rest/users2" target="_top">users2</a></li>
 		                                <li class="divider"></li>
-		                                <li><a href="#">FAQ's</a></li>
-		                                <li><a href="#">Write Us</a></li>
 		                            </ul>
 		                        </li>
-		                        <li><a href="#"><span class="glyphicon glyphicon-gift"></span> KidsFunda</a></li>
-		                        <li><a href="#"><span class="glyphicon glyphicon-film"></span> FundooVideo</a></li>
 		                    </ul>
-		                    <form role="search" class="navbar-form navbar-left">
-		                        <div class="form-group">
-		                            <%-- S E A R C H     B O X  --%>
-		                            <input type="text" placeholder="Search" class="form-control">
-		                        </div>
-		                    </form>
+
 		                    <ul class="nav navbar-nav navbar-right">
 		                        <li><a href="#">Contact</a></li>
-		                        <li class="dropdown">
-		                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-user"></span> Krishna <b class="caret"></b></a>
-		                            <ul role="menu" class="dropdown-menu">
-		                                <li><a href="#"><span class="glyphicon glyphicon-phone"></span> Friends</a></li>
-		                                <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>
-		                                <li><a href="#"><span class="glyphicon glyphicon-globe"></span> Notifications</a></li>
-		                                <li class="divider"></li>
-		                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-		                                <li><a href="#"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
-		                            </ul>
-		                        </li>
 		                    </ul>
 		                </div>
 		            </nav>
