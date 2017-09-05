@@ -44,14 +44,9 @@
         <br/>
         <br/>
 
-        <%-- Load jQuery --%>
-        <script src="${contextPath}/resources/jquery-3.2.1/jquery.min.js"></script>
-
         <%-- Load select2 JS --%>
         <script src="${contextPath}/resources/select2-4.0.3/dist/js/select2.min.js"></script>
 
-        <%-- Load Angular --%>
-        <script src="${contextPath}/resources/angular-1.3.16/angular.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="${contextPath}/resources/moment-2.18.1/moment-with-locales.js"></script>
 
         <%-- Load angular-timer JS --%>

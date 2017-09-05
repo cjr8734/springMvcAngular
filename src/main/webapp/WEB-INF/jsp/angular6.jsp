@@ -25,12 +25,6 @@
             <br/>
             <br/>
 
-            <%-- Load jQuery --%>
-            <script src="${contextPath}/resources/jquery-3.2.1/jquery.min.js"></script>
-
-            <%-- Load Angular --%>
-            <script src="${contextPath}/resources/angular-1.3.16/angular.min.js" type="text/javascript"></script>
-
             <script type="text/javascript">
 
                 // NOTE:  The $location directive needs two things to work:

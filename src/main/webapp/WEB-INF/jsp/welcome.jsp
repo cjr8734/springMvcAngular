@@ -71,9 +71,6 @@
 
     <script src="${contextPath}/resources/OpenLayers/ol.js" type="text/javascript"></script>
 
-    <%-- Load Angular --%>
-    <script src="${contextPath}/resources/angular-1.3.16/angular.min.js" type="text/javascript"></script>
-
     <script type="text/javascript">
         var notesApp = angular.module('notesApp', []);
 
