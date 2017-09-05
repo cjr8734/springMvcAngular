@@ -1,5 +1,7 @@
 package app1.controllers;
 
+import app1.model.User;
+import app1.security.UserInfo;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,12 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import app1.model.UserInfo;
 import org.springframework.web.bind.annotation.PathVariable;
 import app1.utilities.SpringAppContextUtils;
 
@@ -65,16 +68,15 @@ public class WelcomeController
         // Show the welcome.jsp page
         mav.setViewName("welcome.jsp");
 
-        // Create a userInfo object
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserName("Chris");
-        userInfo.setIsAdministrator(true);
+        // Get the userInfo object from Spring-security
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userInfo = (UserInfo) auth.getPrincipal();
 
         String sDatabaseTime = getDatabaseTime();
         logger.debug("Current database time is {}", sDatabaseTime);
         mav.addObject("currentTime", sDatabaseTime);
 
-        // Add the userInfo information to the view
+        // Add the user information to the view
         mav.addObject("userInfo", userInfo);
 
         logger.debug("mainPage() finished");
@@ -90,13 +92,13 @@ public class WelcomeController
         String sViewName = aViewName + ".jsp";
         ModelAndView mav = new ModelAndView(sViewName);
 
-        // Create a userInfo object
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserName("Chris");
-        userInfo.setIsAdministrator(true);
+        // Create a user object
+        User user = new User();
+        user.setUserName("Chris");
+        user.setIsAdministrator(true);
 
-        // Add the userInfo information to the view
-        mav.addObject("userInfo", userInfo);
+        // Add the user information to the view
+        mav.addObject("user", user);
 
         return mav;
     }
@@ -121,7 +123,7 @@ public class WelcomeController
 
     /***************************************************************************
      * getUsers()   *REST EndPoint*
-     *  1) Run SQL to get a List of UserInfo objects
+     *  1) Run SQL to get a List of User objects
      *  2) Use the GSON library to convert the list into a JSON string
      *  3) Return the JSON string
      *
@@ -140,9 +142,9 @@ public class WelcomeController
         try
         {
             // Run a SQL call to get the list of users
-            ArrayList<UserInfo> users = getUserListOrderedBy("name");
+            ArrayList<User> users = getUserListOrderedBy("name");
 
-            // Convert the list of UserInfo into a JSON string
+            // Convert the list of User into a JSON string
             Gson gson = new Gson();
             String sJson = gson.toJson(users);
 
@@ -169,7 +171,7 @@ public class WelcomeController
 
     /***************************************************************************
      * getUsers2()   *REST EndPoint*
-     *  1) Run SQL to get a List of UserInfo objects
+     *  1) Run SQL to get a List of User objects
      *  2) Have Spring Convert the list into a JSON string
      *
      * ASSUMPTION:  You have a dependency that will convert an object to JSON
@@ -202,11 +204,11 @@ public class WelcomeController
         try
         {
             // Run a SQL call to get the list of users
-            ArrayList<UserInfo> users = getUserListOrderedBy("name");
+            ArrayList<User> users = getUserListOrderedBy("name");
 
             // Return the array of Users and a status code of 200 (OK)
             // NOTE:  Spring will convert this to JSON for us automatically
-            return new ResponseEntity<ArrayList<UserInfo>>(users, HttpStatus.OK);
+            return new ResponseEntity<ArrayList<User>>(users, HttpStatus.OK);
         }
         catch (Exception e)
         {
@@ -230,13 +232,13 @@ public class WelcomeController
     /***************************************************************************
      * getUserListOrderedBy()
      *  1) Run a sql call to get all userinfo from the database
-     *  2) Loop through the results, creating UserInfo objects
+     *  2) Loop through the results, creating User objects
      *
-     *  Returns a list of UserInfo objects
+     *  Returns a list of User objects
      ****************************************************************************/
-    private ArrayList<UserInfo> getUserListOrderedBy(String aOrderBy) throws Exception
+    private ArrayList<User> getUserListOrderedBy(String aOrderBy) throws Exception
     {
-        ArrayList<UserInfo> users = new ArrayList<UserInfo>();
+        ArrayList<User> users = new ArrayList<User>();
 
         // Construct the SQL call
         final String sSql = "Select name from users order by " + aOrderBy;
@@ -251,12 +253,12 @@ public class WelcomeController
             // Get the name from the read-only recordset
             String sUserName = rs.getString(1);
 
-            // Construct a new userInfo object and popuplate it with data from the database
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUserName(sUserName);
-            userInfo.setIsAdministrator(false);
+            // Construct a new user object and popuplate it with data from the database
+            User user = new User();
+            user.setUserName(sUserName);
+            user.setIsAdministrator(false);
 
-            users.add(userInfo);
+            users.add(user);
         }
 
         return users;

@@ -4,6 +4,7 @@
 <html lang="en" data-ng-app="notesApp">
 
 <head>
+<meta charset="UTF-8">
     <title>Welcome Page</title>
     <style>
               .map {

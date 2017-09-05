@@ -1,12 +1,12 @@
 package app1.model;
 
-public class UserInfo
+public class User
 {
     private boolean isAdministrator = false;
     private String username;
 
 
-    public UserInfo()
+    public User()
     {
 
     }

@@ -37,8 +37,7 @@
 
             <br/>
 
-            Hello ${userInfo.userName} <br/>
-            Are you an administrator: ${userInfo.isAdministrator }
+            Hello ${userInfo.username} <br/>
 
             <br/>
             <br/>
