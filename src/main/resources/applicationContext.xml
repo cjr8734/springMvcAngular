@@ -48,4 +48,13 @@
         <property name="preferredTestQuery"       value="${jdbc.preferredTestQuery}" />
         <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
     </bean>
+
+    <!-- Read the property values and allows us to use them in this xml file as ${es.url} -->
+    <context:property-placeholder location="classpath:SpringMvc.properties" />
+
+    <!-- Create an ElasticSearchDao singleton and pass-in the es.url (found in app.properties) -->
+    <bean id="elasticSearchDao" class="app1.services.ElasticSearchDao" destroy-method="close">
+        <constructor-arg  value="${es.url}" />
+    </bean>
+
 </beans>

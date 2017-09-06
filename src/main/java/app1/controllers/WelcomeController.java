@@ -2,6 +2,7 @@ package app1.controllers;
 
 import app1.model.User;
 import app1.security.UserInfo;
+import app1.services.ElasticSearchDao;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,11 @@ public class WelcomeController
     @Resource(name = "myProps")
     private Properties appProperties;
 
+    @Resource
+    private ElasticSearchDao elasticSearchDao;
+
     private final static Logger logger = LoggerFactory.getLogger(WelcomeController.class);
+    private Gson gson = new Gson();
 
 
     /**********************************************************************
@@ -305,4 +310,76 @@ public class WelcomeController
         }
         return sb.toString();
     }
+
+    /***************************************************************************
+     * runSearch()
+     *
+     * Returns the JSON holding a list of users
+     ****************************************************************************/
+    @RequestMapping(value="/search/{rawQuery}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> runSearch(@PathVariable(value="rawQuery") String aRawQuery)
+    {
+        logger.debug("runSearch() started.  aRawQuery={}", aRawQuery);
+
+        final String ES_INEX_NAME = "docs";
+        final int    ES_PAGE_SIZE = 5;
+        final int    ES_STARTING_RECORD_NUMBER = 0;
+
+        try
+        {
+            // Run a *synchronous* simple-query-string search against ElasticSearch
+            String sJsonResults = elasticSearchDao.runSimpleQueryString(aRawQuery, ES_INEX_NAME, ES_STARTING_RECORD_NUMBER, ES_PAGE_SIZE);
+
+            // Return respnose code of 200 and the JSON string
+            return new ResponseEntity<String>(sJsonResults, HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            // Tell the AJAX call that this call failed
+            logger.error("Error occurred making rest call to /search", e);
+
+            // Get a formatted error message from the exception object
+            String sMessage = getFormattedMessageFromException(e);
+
+            // Tell the AJAX caller that this will be plain text being returned (and not JSON)
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_PLAIN);
+
+            // Return the error back to the caller
+            return new ResponseEntity<String>(sMessage, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**********************************************************************
+     * showGrid1()
+     *
+     * The user browsed to the /grid1 page
+     *  1) Run a SQL query to get some data from the database
+     *  2) Add that data to the ModelAndView
+     *  3) Forward the user to the grid1.jsp page
+     ***********************************************************************/
+    @RequestMapping("/grid1")
+    public ModelAndView showGrid1( Model aModel ) throws Exception
+    {
+        logger.debug("showGrid1() started");
+
+        // Create a modelAndView object
+        ModelAndView mav = new ModelAndView();
+
+        // Show the grid1.jsp page
+        mav.setViewName("grid1.jsp");
+
+        // Part 1:  Get list of UserInfo objects from the the database
+        ArrayList<User> users = getUserListOrderedBy("name");
+
+        // Part 2:  Convert the list of UserInfo objects into a JSON string
+        String sListOfUsersAsJson = this.gson.toJson(users);
+
+        // Part 3:  Add the JSON string to the model-and-view  (so the page can access it)
+        mav.addObject("listOfUsersAsJson", sListOfUsersAsJson);
+
+        logger.debug("showGrid1() finished");
+        return mav;
+    }
+
 }

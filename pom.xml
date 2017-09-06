@@ -154,6 +154,13 @@
       <version>4.0.3.RELEASE</version>
     </dependency>
 
+    <dependency>
+      <!-- Used for my httpClient implementation -->
+      <groupId>com.ning</groupId>
+      <artifactId>async-http-client</artifactId>
+      <version>1.9.31</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>springMvcAngular</finalName>
