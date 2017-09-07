@@ -3,9 +3,11 @@ package app1.controllers;
 import app1.model.User;
 import app1.security.UserInfo;
 import app1.services.ElasticSearchDao;
+import app1.utilities.ViewCSV;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +25,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import app1.utilities.SpringAppContextUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -380,6 +385,78 @@ public class WelcomeController
 
         logger.debug("showGrid1() finished");
         return mav;
+    }
+
+    /**********************************************************************
+     * download1()
+     ***********************************************************************/
+    @RequestMapping(value = "/download/{fileId}", method = RequestMethod.GET)
+    public  ResponseEntity<?> download(@PathVariable("fileId") String aFileId, HttpServletResponse response) throws Exception
+    {
+        logger.debug("download() started.  aFileId={}", aFileId);
+
+        // Use the passed-in fileId to generate a full-path
+        //    String sFullPath = stuffService.figureOutFileNameFor(stuffId);
+        String sFullPath = "C:\\vault\\CentOS-6.6-x86_64-bin-DVD1.iso";
+
+        try
+        {
+            File file = new File(sFullPath);
+
+            HttpHeaders headers = new HttpHeaders();
+
+            // Set a header with the length of the file (so the browser will know what the total file size is)
+            headers.setContentLength(file.length() );
+
+            // Set a header with the default name to save this file as
+            headers.setContentDispositionFormData("attachment", file.getName());
+
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamResource isr = new InputStreamResource(fis);
+            return new ResponseEntity<InputStreamResource>(isr, headers, HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            logger.error("Error occurred making call to /download/{}", aFileId, e);
+
+            // Get a formatted error message from the exception object
+            String sMessage = getFormattedMessageFromException(e);
+
+            // Tell the AJAX caller that this will be plain text being returned (and not JSON)
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.TEXT_PLAIN);
+
+            // Return the error back to the caller
+            return new ResponseEntity<String>(sMessage, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        finally
+        {
+            logger.debug("download() finished.");
+        }
+    }
+
+    /**********************************************************************
+     * exportCsv()
+     ***********************************************************************/
+    @RequestMapping(value="/exportCsv", method=RequestMethod.GET)
+    public ModelAndView exportCsv()
+    {
+        ModelAndView mav = new ModelAndView();
+
+        // Create an array list of stuff to be exported out
+        ArrayList<String[]> csvOutput = new ArrayList<String[]>();
+
+        // Add the header to the csvOutput
+        csvOutput.add(new String[] {"id", "name", "position" } );
+
+        // Add the data
+        csvOutput.add(new String[] {"1", "Adam", "Developer" } );
+        csvOutput.add(new String[] {"2", "Ben", "Developer" } );
+
+        ViewCSV mavView = new ViewCSV("exportOutput.csv", csvOutput);
+        mav.setView(mavView);
+
+        return(mav);
     }
 
 }
