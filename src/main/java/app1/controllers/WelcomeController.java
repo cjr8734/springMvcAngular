@@ -152,7 +152,7 @@ public class WelcomeController
         try
         {
             // Run a SQL call to get the list of users
-            ArrayList<User> users = getUserListOrderedBy("name");
+            ArrayList<User> users = getUserListOrderedBy("log_id");
 
             // Convert the list of User into a JSON string
             Gson gson = new Gson();
@@ -251,7 +251,7 @@ public class WelcomeController
         ArrayList<User> users = new ArrayList<User>();
 
         // Construct the SQL call
-        final String sSql = "Select name from users order by " + aOrderBy;
+        final String sSql = "Select log_id from jrss_data.data_pa order by " + aOrderBy;
 
         JdbcTemplate jt = new JdbcTemplate(this.postgresDataSource);
 
