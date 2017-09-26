@@ -6,11 +6,7 @@
         <head>
             <title>Angular #4</title>
 
-            <%-- Load select2 CSS --%>
-            <link href="${contextPath}/resources/select2-4.0.3/dist/css/select2.css" rel="stylesheet">
 
-            <!-- Load angular-timer CSS -->
-            <link rel="stylesheet" type="text/css" href="${contextPath}/resources/angular-timer-1.3.5/dist/assets/css/angular-timer-bower.css" />
         </head>
 
         <body data-ng-app="myApp" data-ng-controller="PhoneListCtrl as ctrl">

@@ -11,6 +11,9 @@
 
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+               <%-- P A G E      H E A D    S E C T I O N  --%>
+               <sitemesh:write property='head'/>
+
                <%-- I N S E R T       C S S     B U N D L E     --%>
                <jwr:style src="/id/bootstrap.css"/>
 
@@ -24,12 +27,11 @@
                 <%-- L O A D    J A V A S C R I P T     B U N D L E   (jquery, bootstrap, angular)  --%>
                 <jwr:script src="/id/jquery.bootsrap.angular.js" />
 
-                <%-- P A G E      H E A D    S E C T I O N  --%>
-                <sitemesh:write property='head'/>
             </head>
             <body data-ng-app='<sitemesh:write property="body.data-ng-app" />' data-ng-controller='<sitemesh:write property="body.data-ng-controller" />'>
                 <%-- Standard Header is here  --%>
                 <%@ include file="/WEB-INF/jsp/stdHeader.jsp" %>
+                <div id="main-site-content" style="margin-left:300px; padding:1px 16px;">
 
                 <%-- P A G E     B O D Y     --%>
                 <sitemesh:write property='body'/>
@@ -39,5 +41,6 @@
 
                 <%-- I N S E R T        P A G E        J A V A S C R I P T    using <content tag="bottom_js">  --%>
                 <sitemesh:write property="page.bottom_js"/>
+                </div>
             </body>
 </html>

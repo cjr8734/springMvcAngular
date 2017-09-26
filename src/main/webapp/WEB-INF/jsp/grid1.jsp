@@ -12,8 +12,8 @@
 
 		    <style type="text/css">
 		        .myGrid {
-		            width: 500px;
-		            height: 250px;
+		            width: 1000px;
+		            height: 500px;
 		        }
 		    </style>
 		</head>
@@ -25,6 +25,8 @@
 
 		<%-- U I   G R I D     --%>
 		<div ui-grid="{ data: scopedGridData }" class="myGrid"></div>
+
+		${PADataAsJson};
 
 		<br/>
 		<br/>
@@ -39,7 +41,7 @@
 		    var myApp = angular.module('myApp', ['ui.grid']);
 
 		    // Get the returned JSON string from the JSP page
-		    var gListOfUsersAsJson = ${listOfUsersAsJson};
+		    var gPADataAsJson = ${PADataAsJson};
 
 
 		    myApp.controller('PageController', function ($scope, $log)
@@ -48,7 +50,7 @@
 
 		        // the ng-grid does not allow 'controller as' syntax for options.data
 		        // -- So, we must use the $scope variable
-		        $scope.scopedGridData = gListOfUsersAsJson;
+		        $scope.scopedGridData = gPADataAsJson;
 		    });
 
 		</script>

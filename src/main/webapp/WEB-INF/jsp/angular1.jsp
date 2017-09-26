@@ -18,7 +18,7 @@
             	<button data-ng-click="ctrl.clearResults()()">Clear Results</button>
             <br/>
             	Status: {{ctrl.statusMessage}}<br/>
-            	<textarea data-ng-model="ctrl.restCallResults" style="width: 400px; height: 100px"></textarea>
+            	<textarea data-ng-model="ctrl.restCallResults" style="width: 1000px; height: 250px"></textarea>
             <br/>
             <br/>
 
@@ -55,9 +55,9 @@
                   $scope.phones = [
                     {'name': 'Nexus S',
                      'snippet': 'Fast just got faster with Nexus S.'},
-                    {'name': 'Motorola XOOM™ with Wi-Fi',
+                    {'name': 'Motorola XOOM\u2122  with Wi-Fi',
                      'snippet': 'The Next, Next Generation tablet.'},
-                    {'name': 'MOTOROLA XOOM™',
+                    {'name': 'MOTOROLA XOOM\u2122 ',
                      'snippet': 'The Next, Next Generation tablet.'}
                   ];
                   /*******************************************************************
@@ -67,7 +67,7 @@
                   *******************************************************************/
                   self.makeValidRestCall = function()
                    {
-                    var sUrl = gsContextPath + '/rest/users';
+                    var sUrl = gsContextPath + '/rest/PA';
                     $log.debug("makeRestCall() started making a call to ", sUrl);
 
    		            $http.get(sUrl)
@@ -81,7 +81,7 @@
                         self.statusMessage = 'I got a response with status=' + status;
 
                         // Convert the list of Java objects into a string
-                  	    var sFormattedResults = self.getUserListAsString(data);
+                  	    var sFormattedResults = self.getDataAsString(data);
 
        	                self.restCallResults = self.restCallResults + sFormattedResults + "\n";
        	            })
@@ -102,7 +102,7 @@
                   	self.makeInvalidRestCall = function()
                   	{
                   	    // This url will throw a RunTime Exception
-                  	    var sUrl = gsContextPath + '/rest/users/exception';
+                  	    var sUrl = gsContextPath + '/rest/Pa/exception';
                   	    $log.debug("makeRestCall() started making a call to ", sUrl);
 
                   	    $http.get(sUrl)
@@ -126,14 +126,14 @@
                   	};
 
 
-                  	self.getUserListAsString = function(aUserList)
+                  	self.getDataAsString = function(aData)
                   	{
                   	    var sResults = '';
 
-                  	    for(var i=0; i<aUserList.length; i++)
+                  	    for(var i=0; i<aData.length; i++)
                   	    {
-                  	        var user = aUserList[i];
-                  	        sResults = sResults + 'username=' + user.username + '   IsAdministrator=' + user.isAdministrator + "\n";
+                  	        var dataInstance = aData[i];
+                  	        sResults = sResults + 'LogID=' + dataInstance.log_id + '   SourceIP=' + dataInstance.src_ip + "\n";
                   	    }
 
                   	    return sResults;

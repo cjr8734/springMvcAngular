@@ -24,6 +24,7 @@
 
 		<%-- S T A N D A R D       H E A D E R  --%>
 		<%@ include file="/WEB-INF/jsp/stdHeader.jsp" %>
+		<div style="margin-left:300px; padding:1px 16px; height:1000px;">
 
 		<h1>This is Embarrassing.</h1>
 
@@ -40,6 +41,7 @@
 
 		<%-- S T A N D A R D       F O O T E R  --%>
 		<%@ include file="/WEB-INF/jsp/stdFooter.jsp" %>
+		</div>
 
 		</body>
 </html>
